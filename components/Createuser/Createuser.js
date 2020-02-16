@@ -1,44 +1,41 @@
-import React from 'react'
+import React from "react";
 import "antd/dist/antd.css";
-import { Button,} from "antd";
-import Openmodal from '../Modal/Openmodal';
-import Users from '../Users/Users'
+import { Button } from "antd";
+import Openmodal from "../Modal/Openmodal";
 
-
-
-// const { Button } = antd;
-
-class Createuser extends React.Component{
-    constructor(){
-      super();
-      this.state = {
-        isOpen : false
-      }
-    }
-    openModalHandler = () =>{
-      this.setState({
-        isOpen: true
-      })
-    }
-    closeModalHandler = () =>{
-      this.setState({
-        isOpen: false
-      })
-    }
-    render() {
-    return(
-        <div>
-            {/* {this.state.isOpen? <div onClick={this.closeModalHandler} className="close"></div> : ""} */}
-            <Button onClick={this.openModalHandler}>Create User</Button>
-            {this.state.isOpen? <Openmodal className="modal"
-                show={this.state.isOpen}
-                close={this.closeModalHandler}
-                
-                >
-            </Openmodal>: ""}
-        </div>
-    )
-}
+class Createuser extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      isOpen: false
+    };
+  }
+  openModalHandler = () => {
+    this.setState({
+      isOpen: true
+    });
+  };
+  closeModalHandler = () => {
+    this.setState({
+      isOpen: false
+    });
+  };
+  render() {
+    return (
+      <div>
+        <Button onClick={this.openModalHandler}>Create User</Button>
+        {this.state.isOpen ? (
+          <Openmodal
+            className="modal"
+            show={this.state.isOpen}
+            close={this.closeModalHandler}
+          />
+        ) : (
+          ""
+        )}
+      </div>
+    );
+  }
 }
 
-export default Createuser
+export default Createuser;
