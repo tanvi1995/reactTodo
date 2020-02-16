@@ -18,10 +18,6 @@ class Todos extends Component {
                     <li>
                       {todo.name} <br />
                       {dateformat(new Date(todo.timestampDue), "dd-mmm-yyyy")}
-                      <span className="editIcon">
-                        Edit
-                        <Icon className="icon" type="edit" />
-                      </span>
                       <span
                         className="deleteIcon"
                         onClick={() => this.props.deleteTodo(todo.email)}
