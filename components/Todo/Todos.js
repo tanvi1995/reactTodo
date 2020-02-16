@@ -1,49 +1,56 @@
-import React,{Component} from 'react'
-//import ReactDOM from 'react-dom'
-import '../Todo/todoList.css'
-import { Icon } from 'antd';
+import React, { Component } from "react";
+import "../Todo/todoList.css";
+import { Icon } from "antd";
+import dateformat from "dateformat";
+import * as action from "../../store/actions/index";
+import { connect } from "react-redux";
 
-class Todos extends Component{
-
-  render(){
-    
-  // const todoList = todos? (
-  //   todos.map(todo => {
-  //     return (
-  //       <div className="todo-col" key={todo.id}>
-  //         <span
-  //           onClick={() => {
-  //             deleteTodo(todo.id)
-  //           }}
-  //         >
-  //           {todo.name}
-  //             {todos.email}
-  //         </span>
-  //       </div>
-  //     )
-  //   })
-  // ) : (
-  //   <p>You have no todos</p>
-  // )// 
-  // return <div className="todo-cl">{todoList}</div>
-  console.log("Todos.js",this.props.todos)
-  return(
-    <div className="todoListMain">
-      {this.props.todos? 
-        this.props.todos.map(todo=>{
-            return <span key={todo.id}>
-              <ul className="todo-list">
-              <li>{todo.name}
-              <span className="editIcon" >Edit<Icon className="icon" type="edit" /></span>
-              <span className="deleteIcon" > Delete<Icon type="delete" /></span>
-              </li>
-              </ul>
-            </span>
-          })
-        : "No todos"
-      }
-    </div>
-  )
+class Todos extends Component {
+  render() {
+    console.log("Todos.js", this.props.todos);
+    return (
+      <div className="todoListMain">
+        {this.props.todos
+          ? this.props.todos.map((todo, index) => {
+              return (
+                <span key={index}>
+                  <ul className="todo-list">
+                    <li>
+                      {todo.name} <br />
+                      {dateformat(new Date(todo.timestampDue), "dd-mmm-yyyy")}
+                      <span className="editIcon">
+                        Edit
+                        <Icon className="icon" type="edit" />
+                      </span>
+                      <span
+                        className="deleteIcon"
+                        onClick={() => this.props.deleteTodo(todo.email)}
+                      >
+                        {" "}
+                        Delete
+                        <Icon type="delete" />
+                      </span>
+                    </li>
+                  </ul>
+                </span>
+              );
+            })
+          : "No todos"}
+      </div>
+    );
+  }
 }
-}
-export default Todos
+const mapStateToProps = state => {
+  return {
+    todos: state.todos
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteTodo: name => dispatch(action.deleteTodo(name))
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Todos);
