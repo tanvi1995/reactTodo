@@ -3,7 +3,7 @@ import { Modal,Button } from 'react-bootstrap';
 import {bindActionCreators} from 'redux'
 import {addUser} from '../../store/actions/action'
 import {connect} from 'react-redux'
-import Loader from '../Loader'
+
 
 
 class Openmodal extends Component{
