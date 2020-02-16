@@ -1,44 +1,19 @@
 import React, { Component }  from 'react';
 import { Modal,Button } from 'react-bootstrap';
 import {bindActionCreators} from 'redux'
-
-import Users from '../Users/Users';
+import {addUser} from '../../store/actions/action'
 import {connect} from 'react-redux'
-import reducer from '../../store/reducer/reducer'
+import Loader from '../Loader'
+
 
 class Openmodal extends Component{
  state={
    user:""
  }
- constructor(props)
-    {
-      super(props);
-      this.onAdd = this.onAdd.bind(this);
-      
-    }
-//  onAdd=(user)=>{
-//   console.log(this.state.user);
-//  }
  handleChange= (e)=>{
   this.setState({ user: e.target.value });
 }
-
-onAdd = event => {
-  console.log(this.state.user);
-  event.preventDefault();
-  const name = this.state.user;
-  console.log(name)
-  const info = {name: name};
-  console.log(info)
-const newItem = this.newItem.value
-console.log(this.state.user)
-  this.setState({
-   user: [...this.state.user,newItem]
-  });
-
- };
-  render(){
-    
+  render(){ 
     return(
       <div>
         <Modal.Dialog >
@@ -47,12 +22,16 @@ console.log(this.state.user)
           </Modal.Header>
           <Modal.Body>
             <div>
-              <input type="text" placeholder="add user" ref={(input)=>{this.newItem=input}} onChange={this.handleChange}></input>
+              <form >
+              <input type="text" placeholder="Add new user" ref="userAdd" onChange={this.handleChange} required></input>
+              &nbsp;<input type="text" placeholder="Add new email" ref="userEmail" required></input>
+              </form>
             </div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.props.close}>Close</Button>
-            <Button variant="primary" onClick={event => this.onAdd(event)}>Save changes</Button>
+            <Button variant="primary" onClick={() => {this.props.addUser({name:this.refs.userAdd.value,email:this.refs.userEmail.value,id:""});this.props.close();}} disabled={!this.refs.userAdd|| !this.refs.userEmail}>Save changes</Button>
+            
           </Modal.Footer>
         </Modal.Dialog>
         
@@ -61,13 +40,8 @@ console.log(this.state.user)
 }
 
 }
-// function convertStoreToProps_custom(store){
-//   console.log(store);
-//   return{
-//     myusers:store.users
-//   }
-// }
-// function mapDispatchToProps(dispatch){
-//   return bindActionCreators({addUser},dispatch);
-// }
-export default connect(reducer)(Openmodal)
+
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({addUser},dispatch);
+}
+export default connect(()=>{},mapDispatchToProps)(Openmodal)
